@@ -1,0 +1,46 @@
+[
+    {
+      "id": "r55683",
+      "title": "Pisto",
+      "tm_versions": [
+        "tm6",
+        "tm5"
+      ],
+      "portions": "6 raciones",
+      "nutritions": {
+        "information": "por 1 ración",
+        "calories": "792 kj / 189 kcal",
+        "proteins": "2.56 g",
+        "carbohydrates": "8.28 g",
+        "fats": "16.85 g",
+        "fiber": "2.98 g"
+      },
+      "steps": [
+        "step 1",
+        "step 2",
+        "step 3"
+      ]
+    },
+    {
+        "id": "r55690",
+        "title": "Tortilla",
+        "tm_versions": [
+          "tm6",
+          "tm5",
+          "tm31"
+        ],
+        "portions": "3 raciones",
+        "nutritions": {
+          "information": "por 1 ración",
+          "calories": "792 kj / 189 kcal",
+          "proteins": "2.56 g",
+          "carbohydrates": "8.28 g",
+          "fats": "16.85 g",
+          "fiber": "2.98 g"
+        },
+        "steps": [
+          "step 11",
+          "step 22",
+          "step 33"
+        ]
+      }]
