@@ -1,0 +1,16 @@
+{
+    "User": [
+        {
+            "id": 123,
+            "name": "username1"
+        },
+        {
+            "id": 321,
+            "name": "username2"
+        }
+    ],
+    "Address": {
+        "city": "Chennai",
+        "state": "Tamilnadu"
+    }
+}

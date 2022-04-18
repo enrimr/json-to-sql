@@ -17,6 +17,8 @@ parseIfNotExist();
  * ===========================
  */
 
+const mainTableName = 'recipes'
+
 function parseIfNotExist(){
   fs.open(sqlFilename, 'r', function (fileNotExist, _) {
     if (fileNotExist) {
@@ -43,6 +45,22 @@ function converter(input) {
   // use jsonfile module to read json file
   jsonfile.readFile(jsonFilename, (err, data) => {
     if (err) return console.error(err);
+    console.log(Array.isArray(data))
+    if (Array.isArray(data)){
+      tables.push(mainTableName)
+      data.forEach(element => {
+        const id = element['id']
+        console.log(id)
+        console.log(Object.keys(element))
+        Object.keys(element).forEach(field => {
+          if (Array.isArray(element[field])){
+            console.log("table: " + field)
+            tables.push(field);
+          }
+        })
+      });
+    }
+
 
     const source = data.Data.Data;
     fetchTables(source);
