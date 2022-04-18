@@ -18,7 +18,6 @@ parseIfNotExist();
  * ===========================
  */
 let tablesAreCreated = false
-let tags = ['tags','tm_versions']
 
 function parseIfNotExist(){
   fs.open(sqlFilename, 'r', function (fileNotExist, _) {
@@ -49,7 +48,9 @@ function converter(input) {
   // use jsonfile module to read json file
   jsonfile.readFile(jsonFilename, (err, data) => {
     if (err) return console.error(err);
-
+    
+    const source = data;
+    
     if (Array.isArray(data) && data.length > 0){
 
       let element = data[0]
@@ -62,61 +63,59 @@ function converter(input) {
       })
 
       fetchTablesMainTable(tablesComplexFields);
-      
+
+      for (let i = 0; i < source.length; i++) {
+        var columns = [];
+        var columnTypes = [];
+        var columnInfo = [];
+        var values = [];
+
+        tables.forEach((tableItem, index) => {
+          //const fieldKey = Object.keys(source[i])[index]
+          let field = source[i][tableItem]
+          if (Array.isArray(field)) {
+            const mappedField = field.map((element,index) => {
+              return {
+                mainTableId: source[i].id,
+                order: index,
+                name: element
+              }
+            })
+            parseArray(mappedField, index);
+          }
+          else if (typeof (field) == "object") {
+            field.mainTableId = source[i].id
+            parseObject(field, index); // OK!
+          } else { //para los campos que son simples
+            let otherFields = JSON.parse(JSON.stringify(source[i]));
+  
+            tablesComplexFields.forEach(element => {
+              console.log(element)
+              delete otherFields[element]
+            })
+  
+            console.log(otherFields)
+            parseObject(otherFields, index);
+          }
+        })
+  
+        tablesAreCreated = true
+      }
     } else {
       fetchTables(data);
+      for (let i = 0; i < tables.length; i++) {
+        const tableItem = source[tables[i]];
+        //console.log(tableItem)
+        if (Array.isArray(tableItem)) {
+          parseArray(tableItem, i);
+        }
+        else if (typeof (tableItem) == "object") {
+          parseObject(tableItem, i);
+        }
+      }
     }
 
-    const source = data;
-    
-    for (let i = 0; i < source.length; i++) {
-      var columns = [];
-      var columnTypes = [];
-      var columnInfo = [];
-      var values = [];
-
-      tables.forEach((tableItem, index) => {
-        //const fieldKey = Object.keys(source[i])[index]
-        let field = source[i][tableItem]
-        if (Array.isArray(field)) {
-          const mappedField = field.map((element,index) => {
-            return {
-              mainTableId: source[i].id,
-              order: index,
-              name: element
-            }
-          })
-          parseArray(mappedField, index);
-        }
-        else if (typeof (field) == "object") {
-          field.mainTableId = source[i].id
-          parseObject(field, index); // OK!
-        } else { //para los campos que son simples
-          let otherFields = JSON.parse(JSON.stringify(source[i]));
-
-          tablesComplexFields.forEach(element => {
-            console.log(element)
-            delete otherFields[element]
-          })
-
-          console.log(otherFields)
-          parseObject(otherFields, index);
-        }
-      })
-
-      tablesAreCreated = true
-    }
-
-    /*for (let i = 0; i < tables.length; i++) {
-      const tableItem = source[tables[i]];
-      //console.log(tableItem)
-      if (Array.isArray(tableItem)) {
-        parseArray(tableItem, i);
-      }
-      else if (typeof (tableItem) == "object") {
-        parseObject(tableItem, i);
-      }
-    }*/
+  
     let uniqueCreateTables = [...new Set(createTables)]
     const creates = toSql(uniqueCreateTables);
     const inserts = toSql(valueInserts);
