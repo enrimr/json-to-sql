@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS recipes (id TEXT,language TEXT,title TEXT,rating_count TEXT,rating_score TEXT,level TEXT,preparation_time TEXT,total_time TEXT,portions TEXT);
-CREATE TABLE IF NOT EXISTS tm_versions (mainTableId TEXT,order INTEGER,name TEXT);
-CREATE TABLE IF NOT EXISTS ingredients (mainTableId TEXT,order INTEGER,name TEXT);
-CREATE TABLE IF NOT EXISTS nutritions (information TEXT,calories TEXT,proteins TEXT,carbohydrates TEXT,fats TEXT,fiber TEXT,mainTableId TEXT);
-CREATE TABLE IF NOT EXISTS steps (mainTableId TEXT,order INTEGER,name TEXT);
-CREATE TABLE IF NOT EXISTS tags (mainTableId TEXT,order INTEGER,name TEXT);
+CREATE TABLE IF NOT EXISTS recipes (id TEXT NOT NULL PRIMARY KEY,language TEXT ,title TEXT ,rating_count TEXT ,rating_score TEXT ,level TEXT ,preparation_time TEXT ,total_time TEXT ,portions TEXT );
+CREATE TABLE IF NOT EXISTS tm_versions (mainTableId TEXT ,order INTEGER ,name TEXT );
+CREATE TABLE IF NOT EXISTS ingredients (mainTableId TEXT ,order INTEGER ,name TEXT );
+CREATE TABLE IF NOT EXISTS nutritions (information TEXT ,calories TEXT ,proteins TEXT ,carbohydrates TEXT ,fats TEXT ,fiber TEXT ,mainTableId TEXT );
+CREATE TABLE IF NOT EXISTS steps (mainTableId TEXT ,order INTEGER ,name TEXT );
+CREATE TABLE IF NOT EXISTS tags (mainTableId TEXT ,order INTEGER ,name TEXT );
 INSERT INTO recipes (id,language,title,rating_count,rating_score,level,preparation_time,total_time,portions) VALUES ("r55683","es-ES","Pisto","29","4.8","easy","10min","45min","6 raciones");
 INSERT INTO tm_versions (mainTableId,order,name) VALUES ("r55683",0,"tm6");
 INSERT INTO tm_versions (mainTableId,order,name) VALUES ("r55683",1,"tm5");

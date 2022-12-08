@@ -185,17 +185,22 @@ function converter(input) {
   }
 
   function parseColumnInfo() {
-    console.log(columns)
-    console.log(values)
-    console.log("")
+    //console.log(columns)
+    //console.log(values)
+    //console.log("")
     for (var i = 0; i < columns.length; i++) {
+      let primaryKey = ""
+      console.log(columns[i])
+      if (columns[i] === 'id') {
+        primaryKey = "NOT NULL PRIMARY KEY"
+      }
       if (typeof (values[i]) == "string") {
         columnTypes = "TEXT"
-        columnInfo.push(`${columns[i]} ${columnTypes}`)
+        columnInfo.push(`${columns[i]} ${columnTypes} ${primaryKey}`)
       }
       else if (typeof (values[i]) == "number") {
         columnTypes = "INTEGER"
-        columnInfo.push(`${columns[i]} ${columnTypes}`)
+        columnInfo.push(`${columns[i]} ${columnTypes} ${primaryKey}`)
       }
     }
   }
